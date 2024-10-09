@@ -27,5 +27,26 @@ void circuito::risolvi(bipolo bp0) {
 */
 
 void circuito::aggiungiBipolo(nodo n1, bipolo b, nodo n2) {
-    
+    grafo[n1].push_back(make_pair(b, n2));
+    grafo[n2].push_back(make_pair(b, n1));
+}
+
+void circuito::attraversaDaSx(nodo inizio) {
+    //DFS algoritmo
+    //unordered_map<nodo, bool> nodi_visitati;
+    set<nodo> nodi_visitati;
+    dfs(inizio, nodi_visitati);
+}
+
+void circuito::dfs(nodo att, set<nodo>& visitati) {
+    visitati.insert(att);
+
+    for(const auto& connessione : grafo[att]) {
+        bipolo bp = connessione.first;
+        nodo next = connessione.second;
+        if(visitati.find(next) == visitati.end()) {
+        //CALCOLI
+            dfs(next, visitati);
+        }
+    }
 }

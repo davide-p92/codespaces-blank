@@ -3,6 +3,7 @@
 #include <vector>
 #include <map>
 #include <unordered_map>
+#include <set>
 #include <algorithm>
 
 
@@ -18,7 +19,20 @@ enum class Tipo {
 
 class nodo {
 public:
+    int id;
     string nome;
+    nodo(int id) : id(id) {}
+    //Overload dell'operatore == per efficiente hash con unordered_map
+    bool operator==(const nodo& oth) const {
+        return id == oth.id;
+    }
+    //Funzione hash
+    template<>
+    struct hash<nodo> {
+        size_t operator()(const nodo& n) const noexcept {
+            return hash<int>()(n.id);
+        }
+    }
 };
 
 class bipolo {
@@ -41,5 +55,5 @@ public:
     void aggiungiBipolo(nodo n1, bipolo b, nodo n2);
     void attraversaDaSx(nodo inizio);
 private:
-    void dfs(nodo att, unordered_map<nodo, bool>& visitati);
+    void dfs(nodo att, set<nodo>& visitati);
 };

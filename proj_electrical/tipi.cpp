@@ -29,6 +29,8 @@ void circuito::risolvi(bipolo bp0) {
 void circuito::aggiungiBipolo(nodo n1, bipolo b, nodo n2) {
     grafo[n1].push_back(make_pair(b, n2));
     grafo[n2].push_back(make_pair(b, n1));
+    b.nodo1 = n1;
+    b.nodo2 = n2;
 }
 
 void circuito::attraversaDaSx(nodo inizio) {
